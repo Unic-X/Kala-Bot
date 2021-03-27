@@ -65,3 +65,5 @@ class Anime(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Anime(bot))
+with open("../keys.json","r") as j:
+    print(j.read())

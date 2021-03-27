@@ -67,6 +67,10 @@ class Moderation(commands.Cog):
         else:
             for channel in ctx.guild.channels:
                 pass
+    @commands.is_owner()
+    @commands.command(aliases=["executed","down"])
+    async def close_bot(self,ctx,hash):
+        pass
 def setup(bot):
     bot.add_cog(Moderation())
 

@@ -72,8 +72,8 @@ class Page:
         
     @property
     def images(self):
-        self.PARSE_DATA
-
+        self.PARSED_DATA
+#@cache
 class Search:
     def __init__(self):
         self.last_params=None
@@ -107,15 +107,10 @@ class Search:
         return result
        
 
-
     
 update_fandom("darksouls")
 #page=Page(pageid=150086)
 #print(page.all_content)
-if __name__=="__main__":
-    same=Search()
-    print(same.open_search("uwdhwy gdaywgdyuaghwd"))
 
 class FandomExceptions(Exception):
     pass
-

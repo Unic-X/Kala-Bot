@@ -33,19 +33,8 @@ def update_fandom(name: str):
     else:
         raise FandomExceptions("fandom name must not be empty")
 
-class memorize(dict):
-    def __init__(self, func):
-        self.func = func
-
-    def __call__(self, *args):
-        return self[args]
-
-    def __missing__(self, key):
-        result = self[key] = self.func(*key)
-        return result
-
 #request maker for other functions
-@memorize
+@functools.lru_cache(maxsize=None,typed=False)
 def _fandom_request(params):
     return requests.get(API_URL, params=params).json()
 
@@ -91,6 +80,7 @@ class Search:
         }
         PAGE = {}
         list_of_page = _fandom_request(SEARCH_PARAMS)["query"]["search"]
+        print(list_of_page,type(list_of_page))
         for i in list_of_page:
             PAGE[i["pageid"]] = i["title"]
         print(time.time()-st)

@@ -34,7 +34,7 @@ def update_fandom(name: str):
         raise FandomExceptions("fandom name must not be empty")
 
 #request maker for other functions
-@functools.lru_cache(maxsize=None,typed=False)
+#@functools.lru_cache(maxsize=None,typed=False)
 def _fandom_request(params):
     return requests.get(API_URL, params=params).json()
 
@@ -80,7 +80,6 @@ class Search:
         }
         PAGE = {}
         list_of_page = _fandom_request(SEARCH_PARAMS)["query"]["search"]
-        print(list_of_page,type(list_of_page))
         for i in list_of_page:
             PAGE[i["pageid"]] = i["title"]
         print(time.time()-st)
@@ -105,12 +104,20 @@ class FandomExceptions(Exception):
 
 class Fandom(commands.Cog):
     @commands.command(aliases=["f","fan"])
-    #@commands.cooldown(2,3)
+    @commands.cooldown(2,3)
     async def fandom(self,ctx,name="darksouls",*,search_key:str="DarkSoul"):
         update_fandom(name=name)
         search_res=Search().search(search_key)
         await ctx.send(search_res)
-
+    
+    @fandom.error
+    async def anime_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Please specify an anime name to search info for")
+        elif isinstance(error, commands.BadArgument):
+            await ctx.send("It's so embarassing.. I can't find this anime..")
+        elif isinstance(error, commands.CommandOnCooldown):
+            await ctx.send("You're typing so fast, wait a moment...")
 def setup(bot):
     bot.add_cog(Fandom())
 

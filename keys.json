@@ -1,8 +1,7 @@
-
-    {
-      "token": "Your Key",
-      "main_owner_ids": [
+{
+    "token": "ODI0OTM1MzE0MTU3MjA3NTgy.YF2m4Q.qROZmCO_Qeh0AXTP33lk21oqcYc",
+    "main_owner_ids": [
         511857313808908298
-      ],
-      "BotHash":""
-    }
+    ],
+    "BotHash": "edc65a6de048f8c4"
+}

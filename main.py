@@ -45,7 +45,8 @@ async def bclose(ctx,passww):
 
 cogs=(
     "commands.anime",
-    "commands.mod"
+    "commands.mod",
+    "commands.server"
 )
 if __name__=="__main__":
     for cog in cogs:

@@ -6,6 +6,10 @@ import time
 
 import json
 
+import functools
+
+from discord.ext import commands
+
 API_URL = "https://{}.fandom.com/api.php"
 
 #misc wrapper function for time
@@ -29,25 +33,21 @@ def update_fandom(name: str):
     else:
         raise FandomExceptions("fandom name must not be empty")
 
+class memorize(dict):
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self, *args):
+        return self[args]
+
+    def __missing__(self, key):
+        result = self[key] = self.func(*key)
+        return result
+
 #request maker for other functions
+@memorize
 def _fandom_request(params):
     return requests.get(API_URL, params=params).json()
-
-class Cache:
-    def __init__(self,path:str,params):
-        self.path=path
-        self.latest_params=params
-        self.last_params=None
-    def cache(self,data):
-        with open(self.path,"w+") as f:
-            temp=json.load(f)
-            if self.last_params==self.latest_params:
-                return temp
-            else:
-                self.last_params = self.latest_params
-                json.dump(data,f,indent=4)
-                return data
-
 
 class Page:
 
@@ -73,26 +73,27 @@ class Page:
     @property
     def images(self):
         self.PARSED_DATA
-#@cache
 class Search:
     def __init__(self):
         self.last_params=None
-
+    
+    @functools.lru_cache(maxsize=None,typed=False)
     def search(self,query: str, limit=5):
+        st=time.time()
         SEARCH_PARAMS = {
             "action": "query",
             "format": "json",
             "list": "search",
             "srprop": "",
             "srsearch": query,
-            "srlimit": 1,
+            "srlimit": 5,
             "srinfo":""
         }
         PAGE = {}
         list_of_page = _fandom_request(SEARCH_PARAMS)["query"]["search"]
         for i in list_of_page:
             PAGE[i["pageid"]] = i["title"]
-        print(PAGE)
+        print(time.time()-st)
         return PAGE
     
     def open_search(self,item:str):
@@ -105,12 +106,21 @@ class Search:
         fandom_content=_fandom_request(SEARCH_PARAMS)
         result=dict(zip(fandom_content[1], fandom_content[3]))
         return result
-       
 
-    
-update_fandom("darksouls")
 #page=Page(pageid=150086)
 #print(page.all_content)
 
 class FandomExceptions(Exception):
     pass
+
+class Fandom(commands.Cog):
+    @commands.command(aliases=["f","fan"])
+    #@commands.cooldown(2,3)
+    async def fandom(self,ctx,name="darksouls",*,search_key:str="DarkSoul"):
+        update_fandom(name=name)
+        search_res=Search().search(search_key)
+        await ctx.send(search_res)
+
+def setup(bot):
+    bot.add_cog(Fandom())
+

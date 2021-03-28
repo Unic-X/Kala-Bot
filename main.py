@@ -24,7 +24,7 @@ with open("keys.json","r") as f:
 To do:
 1. Remainder setter
 2. Avoiding data losses ie. before closing the bot by using database🛑
-3.Fandom/Wiki scraper (using API for speed and reliablity)🛑
+3.Fandom/Wiki scraper (using API for speed and reliablity) 🚧 WIP 🚧
 4.Moderator Functions like
     1.Ban/Mute/Kick/Warn  ✅
     2. Logging the actions by the user in a db or a (json file)not preffered as the storage will be heavy
@@ -46,7 +46,8 @@ async def bclose(ctx,passww):
 cogs=(
     "commands.anime",
     "commands.mod",
-    "commands.server"
+    "commands.server",
+    "commands.Fandom.dark_souls"
 )
 if __name__=="__main__":
     for cog in cogs:

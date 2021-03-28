@@ -1,6 +1,24 @@
 import discord as dc
 from discord.ext import commands
-import utils
+from commands import utils
+import secrets,json
+
+intents=dc.Intents.default()
+intents.members=True
+intents.presences=True
+
+client=commands.Bot(command_prefix="!",intents=intents)
+
+passw=secrets.token_hex(8)
+
+def write_json(data):
+    with open("keys.json",'w') as f:
+        json.dump(data, f, indent=4)
+
+with open("keys.json","r") as f:
+    data:dict=json.load(f)
+    data.update({"BotHash":passw})
+    write_json(data)
 
 '''
 To do:
@@ -16,17 +34,20 @@ To do:
 8. Adding custom prefix to each server as per need🛑 
 
 '''
-
-intents=dc.Intents.default()
-intents.members=True
-intents.presences=True
+@commands.is_owner()
+@client.command()
+async def bclose(ctx,passww):
+    if passww==passw:
+        try:
+            await client.close()
+        except:
+            pass
 
 cogs=(
     "commands.anime",
     "commands.mod"
 )
 if __name__=="__main__":
-    client=commands.Bot(command_prefix="!",intents=intents)
     for cog in cogs:
         client.load_extension(cog)
     client.run(utils.get_key_from_json("token"))

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 import aiohttp
-from utils import fetch
+from commands.utils import fetch
 from discord.ext.commands import MissingRequiredArgument, BadArgument, CommandOnCooldown
 from discord.ext import commands
 from discord import Embed
@@ -65,5 +65,3 @@ class Anime(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Anime(bot))
-with open("../keys.json","r") as j:
-    print(j.read())

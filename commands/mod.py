@@ -3,7 +3,6 @@ import time,datetime,discord as dc
 
 start_time = time.time()
 
-warns={}
 
 class Moderation(commands.Cog):
     @commands.command()
@@ -59,7 +58,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"Already Chamar {member.mention}")
     @commands.has_permissions(manage_messages=True)
     @commands.command(aliases=['boc', 'bot_c', 'botc', 'botchannel'])
-    async def bot_channel(self,ctx,channel:dc.TextChannel=None,role_bot:dc.Role=None):
+    async def b_channel(self,ctx,channel:dc.TextChannel=None,role_bot:dc.Role=None):
         if channel==None:
             pass
         elif role_bot==None:
@@ -67,10 +66,6 @@ class Moderation(commands.Cog):
         else:
             for channel in ctx.guild.channels:
                 pass
-    @commands.is_owner()
-    @commands.command(aliases=["executed","down"])
-    async def close_bot(self,ctx,hash):
-        pass
 def setup(bot):
     bot.add_cog(Moderation())
 

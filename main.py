@@ -2,6 +2,8 @@ import discord as dc
 from discord.ext import commands
 from commands import utils
 import secrets,json
+from keep_alive import keep_alive
+keep_alive()
 
 intents=dc.Intents.default()
 intents.members=True
@@ -19,6 +21,7 @@ with open("keys.json","r") as f:
     data:dict=json.load(f)
     data.update({"BotHash":passw})
     write_json(data)
+
 
 '''
 To do:
@@ -42,6 +45,11 @@ async def bclose(ctx,passww):
             await client.close()
         except:
             pass
+@client.command()
+async def ping(ctx):
+    embed = dc.Embed(title=f'{round(client.latency*1000, 2)}ms', colour=0xfefefe)
+    embed.set_author(name='Pong!', icon_url='https://cdn.discordapp.com/attachments/601676952134221845/748535727389671444/toilet.gif') #spinning toilet
+    await ctx.send(embed=embed)
 
 cogs=(
     "commands.anime",

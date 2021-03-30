@@ -55,7 +55,8 @@ cogs=(
     "commands.anime",
     "commands.mod",
     "commands.server",
-    "commands.Fandom.dark_souls"
+    "commands.Fandom.dark_souls",
+    "commands.help"
 )
 if __name__=="__main__":
     for cog in cogs:

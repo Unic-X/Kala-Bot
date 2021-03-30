@@ -6,10 +6,10 @@ start_time = time.time()
 class Moderation(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 4)
-    async def ban(self, ctx,member:dc.Member=None,*, reason: str=None):
+    async def ban(self, ctx,member:dc.Member=None,*, reason=None):
         named_tuple = time.localtime() # get struct_time
         time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)
-        await ctx.send("Member to ban was Not given!!") if member==None else await member.ban(reason)
+        await ctx.send("Member to ban was Not given!!") if member==None else await member.ban(reason=reason)
 
     @commands.command()
     @commands.has_permissions(administrator=True)

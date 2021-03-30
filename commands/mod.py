@@ -6,6 +6,7 @@ start_time = time.time()
 class Moderation(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 4)
+    @dc.ext.commands.has_guild_permissions(manage_messages=True)
     async def ban(self, ctx,member:dc.Member=None,*, reason=None):
         named_tuple = time.localtime() # get struct_time
         time_string = time.strftime("%m/%d/%Y, %H:%M:%S", named_tuple)

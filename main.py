@@ -2,8 +2,8 @@ import discord as dc
 from discord.ext import commands
 from commands import utils
 import secrets,json
-from keep_alive import keep_alive
-keep_alive()
+#from keep_alive import keep_alive
+#keep_alive()
 
 intents=dc.Intents.default()
 intents.members=True
@@ -56,7 +56,8 @@ cogs=(
     "commands.mod",
     "commands.server",
     "commands.Fandom.dark_souls",
-    "commands.help"
+    "commands.help",
+    "commands.Error.error"
 )
 if __name__=="__main__":
     for cog in cogs:

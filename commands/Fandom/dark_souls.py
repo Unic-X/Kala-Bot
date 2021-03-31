@@ -68,7 +68,6 @@ class Search:
     
     @functools.lru_cache(maxsize=None,typed=False)
     def search(self,query: str, limit=5):
-        st=time.time()
         SEARCH_PARAMS = {
             "action": "query",
             "format": "json",
@@ -82,7 +81,6 @@ class Search:
         list_of_page = _fandom_request(SEARCH_PARAMS)["query"]["search"]
         for i in list_of_page:
             PAGE[i["pageid"]] = i["title"]
-        print(time.time()-st)
         return PAGE
     
     def open_search(self,item:str):
@@ -105,19 +103,20 @@ class FandomExceptions(Exception):
 class Fandom(commands.Cog):
     @commands.command(aliases=["f","fan"])
     @commands.cooldown(2,3)
-    async def fandom(self,ctx,name="darksouls",*,search_key:str="DarkSoul"):
+    async def fandom(self,ctx,name="darksouls",*,search_key:str):
         update_fandom(name=name)
         search_res=Search().search(search_key)
-        await ctx.send(search_res)
+        first=search_res.keys[1]
+        page=Page(pageid=first).all_content()
+        print(page)
+        await ctx.send(page)
     
     @fandom.error
-    async def anime_error(self, ctx, error):
+    async def fandom_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Please specify an anime name to search info for")
+            await ctx.send("Please specify a term to search for")
         elif isinstance(error, commands.BadArgument):
-            await ctx.send("It's so embarassing.. I can't find this anime..")
-        elif isinstance(error, commands.CommandOnCooldown):
-            await ctx.send("You're typing so fast, wait a moment...")
+            await ctx.send("It's so embarassing.. I can't find results")
 def setup(bot):
     bot.add_cog(Fandom())
 

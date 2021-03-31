@@ -8,3 +8,5 @@ def get_key_from_json(key: str):
 async def fetch(session, url):
     async with session.get(url) as response:
         return await response.json()
+def temp_ban():
+    pass

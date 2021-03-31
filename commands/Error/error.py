@@ -22,8 +22,7 @@ class errors(commands.Cog):
                 warning[ctx.author.id]+=1
             else:
                 warning[ctx.author.id]=1
-            await ctx.send(f"You are sending commands too fast send after {error.retry_after}")
-        
+            await ctx.send(f"You are sending commands too fast send after {round(error.retry_after,1)}")
 
 def setup(client):
     client.add_cog(errors(client))

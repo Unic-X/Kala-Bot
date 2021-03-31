@@ -3,6 +3,8 @@ import time,datetime,discord as dc
 
 start_time = time.time()
 
+warning={}
+
 class Moderation(commands.Cog):
     @commands.command()
     @commands.cooldown(1, 4)
@@ -108,6 +110,20 @@ class Moderation(commands.Cog):
             e.add_field(name=f"Roles({len(member.roles)-1})",value="\n".join(roles[1:]))
 
         await ctx.send(content=f"<:info:779039384296882217> Information about **{member.name}**",embed=e)
+    @commands.command()
+    async def warnings(self,ctx,member:dc.User):
+        print(warning)
+        member.mention
+        await ctx.send(f"{member.display_name} has {warning[member.id]}")
+
+    @warnings.error
+    async def warnings_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send("Please specify user name to search warnings for")
+        elif isinstance(error, commands.BadArgument):
+            await ctx.send("I can't find the user specified")
+
+
 def setup(bot):
     bot.add_cog(Moderation())
 

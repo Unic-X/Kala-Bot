@@ -45,6 +45,7 @@ class Anime(commands.Cog):
     @commands.command(name='anime', aliases=['animeinfo', 'ai', 'mal', 'myanimelist'])
     @commands.cooldown(1, 3)
     async def anime(self, ctx, *, term: str):
+        '''Gets the Anime''' 
         query = await get_anime_info_by_name(term)
         if query:
             await ctx.send(embed=Embed(color=0x2F3136, title=f"Anime Informations for {query.Title} - {query.Type}", description=f"ᕙ(⇀‸↼‵‵)ᕗ **{ctx.author.mention}** I've found out your anime !")

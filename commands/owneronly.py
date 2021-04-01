@@ -25,3 +25,5 @@ class OwnerOnly(commands.Cog):
                 pass
 
 
+def setup(bot):
+    bot.add_cog(OwnerOnly(bot))

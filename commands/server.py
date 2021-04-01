@@ -13,6 +13,8 @@ def date(target, clock=True):
     return target.strftime("%d %B %Y, %H:%M")
 
 class Server(commands.Cog):
+    def __init__(self,bot):
+        self.bot=bot
     @commands.command()
     @commands.guild_only()
     async def avatar(self, ctx, *, user: dc.Member = None):
@@ -85,6 +87,12 @@ class Server(commands.Cog):
         if not ctx.guild.icon:
             return await ctx.send("This server does not have a avatar...")
         await ctx.send(f"Avatar of **{ctx.guild.name}**\n{ctx.guild.icon_url_as(size=1024)}")
+    
+    @commands.command()
+    async def ping(self,ctx):
+        embed = dc.Embed(title=f'{round(self.bot.latency*1000, 2)}ms', colour=0xfefefe)
+        embed.set_author(name='Pong!', icon_url='https://cdn.discordapp.com/attachments/601676952134221845/748535727389671444/toilet.gif') #spinning toilet
+        await ctx.send(embed=embed)
 
 
 def setup(bot):

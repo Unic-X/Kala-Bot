@@ -1,7 +1,6 @@
 import discord as dc
 from discord.ext import commands
 from commands import utils
-import secrets,json
 from keep_alive import keep_alive
 keep_alive()
 
@@ -9,18 +8,7 @@ intents=dc.Intents.default()
 intents.members=True
 intents.presences=True
 
-client=commands.Bot(command_prefix="!",intents=intents)
-
-passw=secrets.token_hex(8)
-
-def write_json(data):
-    with open("keys.json",'w') as f:
-        json.dump(data, f, indent=4)
-
-with open("keys.json","r") as f:
-    data:dict=json.load(f)
-    data.update({"BotHash":passw})
-    write_json(data)
+client=commands.Bot(command_prefix="!",intents=intents,)
 
 
 '''
@@ -37,27 +25,14 @@ To do:
 8. Adding custom prefix to each server as per need🛑 
 
 '''
-@commands.is_owner()
-@client.command()
-async def bclose(ctx,passww):
-    if passww==passw:
-        try:
-            await client.close()
-        except:
-            pass
-@client.command()
-async def ping(ctx):
-    embed = dc.Embed(title=f'{round(client.latency*1000, 2)}ms', colour=0xfefefe)
-    embed.set_author(name='Pong!', icon_url='https://cdn.discordapp.com/attachments/601676952134221845/748535727389671444/toilet.gif') #spinning toilet
-    await ctx.send(embed=embed)
-
 cogs=(
     "commands.anime",
     "commands.mod",
     "commands.server",
     "commands.Fandom.dark_souls",
     "commands.help",
-    "commands.Error.error"
+    "commands.Error.error",
+    "commands.owneronly"
 )
 if __name__=="__main__":
     for cog in cogs:

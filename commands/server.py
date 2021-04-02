@@ -94,6 +94,5 @@ class Server(commands.Cog):
         embed.set_author(name='Pong!', icon_url='https://cdn.discordapp.com/attachments/601676952134221845/748535727389671444/toilet.gif') #spinning toilet
         await ctx.send(embed=embed)
 
-
 def setup(bot):
     bot.add_cog(Server(bot))

@@ -30,7 +30,8 @@ async def get_anime_info_by_name(name: str) -> AnimeInfo:
                          response["results"][0]["episodes"],
                          response["results"][0]["airing"],
                          response["results"][0]["score"],
-                         response["results"][0]["synopsis"] if len(response["results"][0]["synopsis"]) < 516 else f"{response['results'][0]['synopsis'][:516]}..",
+                         response["results"][0]["synopsis"] if len(
+                             response["results"][0]["synopsis"]) < 516 else f"{response['results'][0]['synopsis'][:516]}..",
                          response["results"][0]["image_url"],
                          response["results"][0]["url"]
                          ) if len(response["results"]) > 0 else False
@@ -45,14 +46,15 @@ class Anime(commands.Cog):
     @commands.command(name='anime', aliases=['animeinfo', 'ai', 'mal', 'myanimelist'])
     @commands.cooldown(1, 3)
     async def anime(self, ctx, *, term: str):
-        '''Gets the Anime''' 
+        '''Gets the Anime'''
         query = await get_anime_info_by_name(term)
         if query:
             await ctx.send(embed=Embed(color=0x2F3136, title=f"Anime Informations for {query.Title} - {query.Type}", description=f"ᕙ(⇀‸↼‵‵)ᕗ **{ctx.author.mention}** I've found out your anime !")
                            .set_thumbnail(url=query.Image_URL)
                            .add_field(name="**Information**", value=f"MAL Score: **{query.Score}**\nEpisodes: **{query.Episodes}**\nAiring: **{'Yes' if query.Airing else 'No'}**")
                            .add_field(name=f"**Synopsis**", value=f"{query.Synopsis}\n[See it on MAL]({query.URL})"))
-        else: await ctx.send("It's so embarassing.. I can't find this anime..", delete_after=5.0)
+        else:
+            await ctx.send("It's so embarassing.. I can't find this anime..", delete_after=5.0)
 
     @anime.error
     async def anime_error(self, ctx, error):

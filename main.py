@@ -1,14 +1,14 @@
 import discord as dc
 from discord.ext import commands
 from commands import utils
-from keep_alive import keep_alive
-keep_alive()
+#from keep_alive import keep_alive
+#keep_alive()
 
-intents=dc.Intents.default()
-intents.members=True
-intents.presences=True
+intents = dc.Intents.default()
+intents.members = True
+intents.presences = True
 
-client=commands.Bot(command_prefix="!",intents=intents)
+client = commands.Bot(command_prefix="!", intents=intents)
 
 
 '''
@@ -25,7 +25,7 @@ To do:
 8. Adding custom prefix to each server as per need🛑 
 
 '''
-cogs=(
+cogs = (
     "commands.anime",
     "commands.mod",
     "commands.server",
@@ -34,8 +34,8 @@ cogs=(
     "commands.Error.error",
     "commands.owneronly"
 )
-if __name__=="__main__":
+if __name__ == "__main__":
     for cog in cogs:
         client.load_extension(cog)
-        client.owner_ids=utils.get_key_from_json("main_owner_ids")
+        client.owner_ids = utils.get_key_from_json("main_owner_ids")
     client.run(utils.get_key_from_json("token"))

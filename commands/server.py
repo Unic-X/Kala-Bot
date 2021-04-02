@@ -1,20 +1,26 @@
 from discord.ext import commands
-import time,datetime,discord as dc
+import time
+import datetime
+import discord as dc
 from io import BytesIO
 
 
 def timetext(name):
     """ Timestamp, but in text form """
     return f"{name}_{int(time.time())}.txt"
+
+
 def date(target, clock=True):
     """ Clock format using datetime.strftime() """
     if not clock:
         return target.strftime("%d %B %Y")
     return target.strftime("%d %B %Y, %H:%M")
 
+
 class Server(commands.Cog):
-    def __init__(self,bot):
-        self.bot=bot
+    def __init__(self, bot):
+        self.bot = bot
+
     @commands.command()
     @commands.guild_only()
     async def avatar(self, ctx, *, user: dc.Member = None):
@@ -57,7 +63,7 @@ class Server(commands.Cog):
                 message += f"{all_status[g]['emoji']} {', '.join(all_status[g]['users'])}\n"
 
         await ctx.send(f"Mods in **{ctx.guild.name}**\n{message}")
-    
+
     @commands.group()
     @commands.guild_only()
     async def server(self, ctx):
@@ -72,27 +78,34 @@ class Server(commands.Cog):
             if ctx.guild.banner:
                 embed.set_image(url=ctx.guild.banner_url_as(format="png"))
 
-            embed.add_field(name="Server Name", value=ctx.guild.name, inline=True)
+            embed.add_field(name="Server Name",
+                            value=ctx.guild.name, inline=True)
             embed.add_field(name="Server ID", value=ctx.guild.id, inline=True)
-            embed.add_field(name="Members", value=ctx.guild.member_count, inline=True)
+            embed.add_field(
+                name="Members", value=ctx.guild.member_count, inline=True)
             embed.add_field(name="Bots", value=find_bots, inline=True)
             embed.add_field(name="Owner", value=ctx.guild.owner, inline=True)
             embed.add_field(name="Region", value=ctx.guild.region, inline=True)
-            embed.add_field(name="Created", value=date(ctx.guild.created_at), inline=True)
-            await ctx.send(content=f"ℹ information about **{ctx.guild.name}**", embed=embed)    
+            embed.add_field(name="Created", value=date(
+                ctx.guild.created_at), inline=True)
+            await ctx.send(content=f"ℹ information about **{ctx.guild.name}**", embed=embed)
 
-    @server.command(name="avatar", aliases=["sicon","serveric","guildicon","servericon"])
+    @server.command(name="avatar", aliases=["sicon", "serveric", "guildicon", "servericon"])
     async def server_avatar(self, ctx):
         """ Get the current server icon """
         if not ctx.guild.icon:
             return await ctx.send("This server does not have a avatar...")
         await ctx.send(f"Avatar of **{ctx.guild.name}**\n{ctx.guild.icon_url_as(size=1024)}")
-    
+
     @commands.command()
-    async def ping(self,ctx):
-        embed = dc.Embed(title=f'{round(self.bot.latency*1000, 2)}ms', colour=0xfefefe)
-        embed.set_author(name='Pong!', icon_url='https://cdn.discordapp.com/attachments/601676952134221845/748535727389671444/toilet.gif') #spinning toilet
+    async def ping(self, ctx):
+        embed = dc.Embed(
+            title=f'{round(self.bot.latency*1000, 2)}ms', colour=0xfefefe)
+        # spinning toilet
+        embed.set_author(
+            name='Pong!', icon_url='https://cdn.discordapp.com/attachments/601676952134221845/748535727389671444/toilet.gif')
         await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Server(bot))

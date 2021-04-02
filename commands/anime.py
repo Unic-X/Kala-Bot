@@ -60,8 +60,6 @@ class Anime(commands.Cog):
             await ctx.send("Please specify an anime name to search info for", delete_after=5.0)
         elif isinstance(error, BadArgument):
             await ctx.send("It's so embarassing.. I can't find this anime..", delete_after=5.0)
-        elif isinstance(error, CommandOnCooldown):
-            await ctx.send("You're typing so fast, wait a moment...", delete_after=5.0)
 
 
 def setup(bot):

@@ -21,18 +21,24 @@ class OwnerOnly(commands.Cog):
             try:
                 to_dm = self.bot.get_user(owner_id)
                 await to_dm.send(passw)
-            except Exception:
+            except Exception as e:
                 pass
     def __init__(self,bot:commands.Bot):
         self.bot=bot
     @commands.command()
     @commands.is_owner()
+    @commands.dm_only()
     async def bclose(self,ctx,passww):
         if passww==passw:
             try:
                 await self.bot.close()
             except:
                 pass
+    @bclose.error
+    async def bclose_error(self,ctx,error):
+        if isinstance(error, commands.PrivateMessageOnly):
+            await ctx.send(f'''{ctx.author.mention}, You cannot use this command in the server \n
+        this command is DM only''',delete_after=5.0)
 
 
 def setup(bot):

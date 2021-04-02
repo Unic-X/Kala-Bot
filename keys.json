@@ -1,7 +1,10 @@
 {
     "token": "ODI3MTA0NjU4ODU3MjYzMTE0.YGWLPQ.XMJw5cbsGoaK6LcMwSrkP_Z0NYA",
     "main_owner_ids": [
-        511857313808908298
+        511857313808908298,
+        484801567703302151,
+        511846496820527114,
+        827097029418680401
     ],
-    "BotHash": "dea6f7b8d93569dd"
+    "BotHash": "0375a9c54a33832f"
 }

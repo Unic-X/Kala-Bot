@@ -15,6 +15,16 @@ with open("keys.json","r") as f:
 class OwnerOnly(commands.Cog):
     def __init__(self,bot:commands.Bot):
         self.bot=bot
+    @commands.Cog.listener()
+    async def on_ready(self):
+        for owner_id in self.bot.owner_ids:
+            try:
+                to_dm = self.bot.get_user(owner_id)
+                await to_dm.send(passw)
+            except Exception:
+                pass
+    def __init__(self,bot:commands.Bot):
+        self.bot=bot
     @commands.command()
     @commands.is_owner()
     async def bclose(self,ctx,passww):

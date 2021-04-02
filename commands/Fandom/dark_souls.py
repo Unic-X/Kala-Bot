@@ -36,7 +36,9 @@ def update_fandom(name: str):
 #request maker for other functions
 #@functools.lru_cache(maxsize=None,typed=False)
 def _fandom_request(params):
-    return requests.get(API_URL, params=params).json()
+    a=requests.get(API_URL, params=params)
+    print(a.url)
+    return(a.json())
 
 class Page:
 
@@ -46,9 +48,8 @@ class Page:
         self.pageid = pageid
         self.title = title
         self.page_name = page_name
-        self.all_content = self.all_content()
         self.PARSED_DATA=None
-
+    @property
     def all_content(self):
         SEARCH_PARAMS = {
             "action": "parse",
@@ -105,18 +106,19 @@ class Fandom(commands.Cog):
     @commands.cooldown(2,3)
     async def fandom(self,ctx,name="darksouls",*,search_key:str):
         update_fandom(name=name)
-        search_res=Search().search(search_key)
-        first=search_res.keys[1]
-        page=Page(pageid=first).all_content()
-        print(page)
-        await ctx.send(page)
-    
+        search_res=Search()
+        first=tuple(search_res.search(search_key).keys())[1]
+        page=Page(pageid=first)
+        sex=page.all_content
+        #await ctx.send(page)
     @fandom.error
     async def fandom_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send("Please specify a term to search for")
         elif isinstance(error, commands.BadArgument):
             await ctx.send("It's so embarassing.. I can't find results")
+        else:
+            raise error
 def setup(bot):
     bot.add_cog(Fandom())
 

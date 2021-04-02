@@ -1,6 +1,6 @@
 from discord.ext import commands
 from commands.mod import warning
-
+from commands.utils import temp_ban
 class errors(commands.Cog):
     global warning
     @commands.Cog.listener()
@@ -22,7 +22,11 @@ class errors(commands.Cog):
                 warning[ctx.author.id]+=1
             else:
                 warning[ctx.author.id]=1
+            print(warning)
             await ctx.send(f"You are sending commands too fast send after {round(error.retry_after,1)}")
+            if warning[ctx.author.id]>=2:
+                print("temp_banning")
+                temp_ban(userid=ctx.author.id)
 
 def setup(client):
     client.add_cog(errors(client))

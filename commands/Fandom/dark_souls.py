@@ -6,6 +6,16 @@ import time
 
 import json
 
+import aiohttp,asyncio
+
+async def fetch(session, url,params=None):
+    if params==None:
+            async with session.get(url) as response:
+                return await response.json()
+    else:
+        async with session.get(url,params=params) as response:
+            return await response.json()
+
 import functools
 
 from discord.ext import commands
@@ -39,8 +49,11 @@ def update_fandom(name: str):
 
 # request maker for other functions
 # @functools.lru_cache(maxsize=None,typed=False)
-
-
+async def async_request(params):
+    async with aiohttp.ClientSession() as session:
+        response = await fetch(session,
+                               API_URL,params=params)
+        return response
 def _fandom_request(params):
     a = requests.get(API_URL, params=params)
     print(a.url)
@@ -65,7 +78,7 @@ class Page:
             "pageid": self.pageid,
             "contentformat": 'application/json'
         }
-        self.PARSED_DATA = _fandom_request(SEARCH_PARAMS)["parse"]["text"]["*"]
+        self.PARSED_DATA = asyncio.run(async_request(SEARCH_PARAMS))["parse"]["text"]["*"]
         content = BeautifulSoup(self.PARSED_DATA, "lxml")
         paragraphs = content.find_all(
             "p", limit=10

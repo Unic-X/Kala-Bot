@@ -7,9 +7,13 @@ def get_key_from_json(key: str):
     return data[key]
 
 
-async def fetch(session, url):
-    async with session.get(url) as response:
-        return await response.json()
+async def fetch(session, url,params=None):
+    if params==None:
+            async with session.get(url) as response:
+                return await response.json()
+    else:
+        async with session.get(url,params=params) as response:
+            return await response.json()
 
 
 def temp_ban(userid):

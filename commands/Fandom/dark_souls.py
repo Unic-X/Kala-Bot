@@ -8,6 +8,7 @@ import json
 
 import aiohttp,asyncio
 
+
 async def fetch(session, url,params=None):
     if params==None:
             async with session.get(url) as response:
@@ -175,11 +176,13 @@ class Fandom(commands.Cog):
             await ctx.send("It's so embarassing.. I can't find results")
         else:
             raise error
-
+    @fandom.command()
+    async def wikia(self,ctx,*,text):
+        print("i was called")
 
 def setup(bot):
     bot.add_cog(Fandom())
-
-update_fandom("darksouls")
-page = Page(pageid=52657)
-print(page.all_content)
+if __name__=="main":
+    update_fandom("darksouls")
+    page = Page(pageid=52657)
+    print(page.all_content)

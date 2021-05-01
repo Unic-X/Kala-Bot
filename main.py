@@ -29,7 +29,6 @@ cogs = (
     "commands.anime",
     "commands.mod",
     "commands.server",
-    "commands.Fandom.dark_souls",
     "commands.help",
     "commands.Error.error",
     "commands.owneronly"

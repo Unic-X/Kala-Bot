@@ -20,6 +20,12 @@ def date(target, clock=True):
 class Server(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, commands.BadArgument):
+            await ctx.send(error)
+        if isinstance(error, commands.TooManyArguments):
+            await ctx.send(f'You called the {ctx.command.name} command with too many arguments.')   
 
     @commands.command()
     @commands.guild_only()
@@ -105,7 +111,6 @@ class Server(commands.Cog):
         embed.set_author(
             name='Pong!', icon_url='https://cdn.discordapp.com/attachments/601676952134221845/748535727389671444/toilet.gif')
         await ctx.send(embed=embed)
-
 
 def setup(bot):
     bot.add_cog(Server(bot))

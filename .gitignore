@@ -1,0 +1,5 @@
+# Generated files/directories
+__pycache__/
+
+#Sensitive Info
+keys.json

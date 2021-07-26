@@ -2,11 +2,10 @@ from discord.ext import commands
 import time
 import datetime
 import discord as dc
-
+from commands.utils import *
 start_time = time.time()
 
 warning = {}
-
 
 class Moderation(commands.Cog):
     @commands.command()

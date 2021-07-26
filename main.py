@@ -8,7 +8,7 @@ intents = dc.Intents.default()
 intents.members = True
 intents.presences = True
 
-client = commands.Bot(command_prefix="!", intents=intents)
+client = commands.Bot(command_prefix=">", intents=intents)
 
 
 '''
@@ -31,7 +31,8 @@ cogs = (
     "commands.server",
     "commands.help",
     "commands.Error.error",
-    "commands.owneronly"
+    "commands.owneronly",
+    "commands.quran"
 )
 if __name__ == "__main__":
     for cog in cogs:

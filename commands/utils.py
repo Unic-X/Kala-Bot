@@ -1,6 +1,5 @@
 import json
 
-
 def get_key_from_json(key: str):
     with open('keys.json', 'r+') as file:
         data = json.load(file)

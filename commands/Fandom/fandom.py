@@ -13,8 +13,6 @@ import html2text
 
 API_URL = "https://{}.fandom.com/api.php"
 
-# misc wrapper function for time
-
 
 def timeit(fn):
     def wrapper(*args, **kwargs):
@@ -28,18 +26,12 @@ def timeit(fn):
 
     return wrapper
 
-# required to pass
-
-
 def update_fandom(name: str=None):
     global API_URL
     if name != None:
         API_URL = API_URL.format(name.lower())
     else:
         API_URL="http://en.wikipedia.org/w/api.php"
-
-# request maker for other functions
-# @functools.lru_cache(maxsize=None,typed=False)
 
 
 def _fandom_request(params):

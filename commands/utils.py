@@ -1,4 +1,5 @@
 import json
+import re
 
 def get_key_from_json(key: str):
     with open('keys.json', 'r+') as file:
@@ -22,3 +23,13 @@ def temp_ban(userid):
             json_data["banned"].append(userid)
     with open('commands\\banned.json', 'w') as file:
         json.dump(json_data, file, indent=2)
+
+def to_dict(string):
+    argumented_list=re.split('; |, |\*|\s|\n',re.sub(' +', ' ',string))
+    a={}
+    for e in argumented_list:
+        if len(e)>1:
+            sub_list=e.split("=")
+            a[sub_list[0]]=sub_list[1]  #key
+
+    return a

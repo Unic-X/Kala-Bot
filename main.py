@@ -8,7 +8,7 @@ intents = dc.Intents.default()
 intents.members = True
 intents.presences = True
 
-client = commands.Bot(command_prefix=">", intents=intents)
+client = commands.Bot(command_prefix=commands.when_mentioned_or(">"), intents=intents)
 
 
 '''

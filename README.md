@@ -4,4 +4,4 @@
 
 ![gif](Examples/changToken.gif)
 
-Of course i have changed my TOKEN if u try to use the token
+Of course i have changed my TOKEN if u try to use it
